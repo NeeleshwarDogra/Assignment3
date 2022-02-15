@@ -1,0 +1,62 @@
+.container{
+    width: 100%;
+    /* height: 100%; */
+    display: flex;
+    margin: auto;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 10%;
+    /* vertical-align: middle; */
+}
+
+.form{
+    margin-top: 50px;
+    border: 5px solid black;
+    height: 300px;
+    width: 400px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.buttons{
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+}
+
+div.buttons > button{
+    width: 100%;
+    border: none;
+    height: 50px;    
+}
+
+div.buttons > button:hover{
+    cursor: pointer;
+}
+
+#login{
+    border-right: 2px solid black;
+    background-color: #e05ad3;
+}
+
+#register{
+    border-bottom: 2px solid black;
+    background-color: aqua;
+}
+
+.loginform{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+div.loginform > label {
+    margin-top: 20px;
+}
+
+.inputtab{
+    margin-left: 20px;
+}
