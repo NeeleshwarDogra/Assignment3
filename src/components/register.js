@@ -3,7 +3,7 @@ import "./register.css";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-    const userdata = [
+    const [userdata, setuserdata] = useState([
         {
             name: "Neeleshwar Dogra",
             username: "neeleshwardogra@gmail.com",
@@ -14,35 +14,56 @@ const Register = () => {
             username: "someone@email.com",
             password: "password",
         },
-    ];
+    ]);
 
     const navigate = useNavigate();
 
-    const [butstate, setbutstate] = useState([true, false]);
+    const [showlogin, setlogin] = useState(true)
 
-    const [username, setusername] = useState({ value: "" });
+    const [showreg, setreg] = useState(false)
+
+    const [email, setemail] = useState({ value: "" });
 
     const [password, setpassword] = useState({ value: "" });
 
-    const [name, setname] = useState({ value: "" });
+    const [name, setname] = useState({value: ""})
 
-    const handlename = (e) => {
-        setusername({ value: e.target.value });
+    const newuser = {name: "", username: "", password:""}
+    const cp = {password: ""}
+
+    const handleemail = (e) => {
+        setemail({ value: e.target.value });
     };
 
     const handlepass = (e) => {
         setpassword({ value: e.target.value });
     };
 
+    const handlename = (e) => {
+        newuser.name =  e.target.value
+    }
+
+    const handleregemail = (e) => {
+        newuser.username = e.target.value
+    }
+
+    const handleregpass = (e) => {
+        newuser.password = e.target.value
+    }
+
+    const handlecppass = (e) => {
+        cp.password = e.target.value
+    }
+
     const Validator = (e) => {
         e.preventDefault();
         let checker = 0;
-        if (username.value.length < 1) {
+        if (email.value.length < 1) {
             alert("Enter Username");
         } else if (password.value.length > 0) {
             userdata.map((user, index) => {
                 if (
-                    user.username === username.value &&
+                    user.username === email.value &&
                     user.password === password.value
                 ) {
                     setname({value: user.name})
@@ -53,7 +74,7 @@ const Register = () => {
             if (checker === 1) {
                 console.log("login");
                 navigate("/home", {
-                    state: { user: username.value, pass: password.value },
+                    state: {name: name.value, user: email.value, pass: password.value },
                 });
             } else {
                 alert("Incorrect email or password");
@@ -63,43 +84,46 @@ const Register = () => {
         }
     };
 
-    const changecolor = (event) => {
-        if (event.target.id === "login") {
-            let var1 = document.getElementById("login");
-            var1.style.backgroundColor = "#e05ad3";
-            var1.style.borderBottom = "none";
-            document.getElementById("register").style.backgroundColor = "";
-            document.getElementById("register").style.borderBottom =
-                "2px solid black";
-            setbutstate([true, false]);
-        } else if (event.target.id === "register") {
-            document.getElementById("register").style.backgroundColor =
-                "#e05ad3";
-            document.getElementById("login").style.backgroundColor = "aqua";
-            document.getElementById("register").style.borderBottom = "none";
-            document.getElementById("login").style.borderBottom =
-                "2px solid black";
-            setbutstate([false, true]);
+    const RegisterUser = (e) => {
+        e.preventDefault()
+        if (newuser.name.length < 1){
+            alert("Please Enter a name")
         }
-    };
+        else if(newuser.username.length < 1) {
+            alert("Please enter a valid email")
+        }
+        else if(newuser.password.length < 1) {
+            alert("Please enter a password")
+        }
+        else if(cp.password.length < 1) {
+            alert("Please confirm password")
+        }
+        else if(cp.password != newuser.password){
+            alert("Passwords dont match")
+        }
+        else{
+            setuserdata([...userdata,newuser])
+            console.log(userdata)
+            alert("You can now login")
+        }
+    }
 
-    const Show = (props) => {
-        if (props.showval[0] === true && props.showval[1] === false) {
-            return (
+    const Login = ({display}) => {
+        if (display) {
+            return(
                 <div>
                     <form onSubmit={Validator} className="loginform">
                         <label>
-                            Username
-                            <input
-                                className="inputtab"
-                                type="email"
-                                name="username"
-                                value={username.value}
-                                onChange={handlename}
-                                placeholder="Enter Username"
-                            />
+                            Email
+                        <input
+                            className="emailinputtab"
+                            type="email"
+                            name="email"
+                            value={email.value}
+                            onChange={handleemail}
+                            placeholder="Enter Email"
+                        />
                         </label>
-                        <br />
                         <label>
                             Password
                             <input
@@ -111,15 +135,65 @@ const Register = () => {
                                 placeholder="Enter Password"
                             />
                         </label>
-                        <br />
-                        <input type="submit" value="submit" />
+                        <label><input type="submit" value="submit" /></label>
                     </form>
                 </div>
-            );
-        } else if (props.showval[1] === true && props.showval[0] === false) {
-            return null;
+            )
         }
-    };
+        else{
+            return null
+        }
+    }
+
+    const Register = ({display2}) => {
+        if (display2) {
+            return(
+                <div>
+                    <form className="loginform" onSubmit={RegisterUser}>
+                        <label>
+                            Enter name
+                            <input className="np" type="text" placeholder="Enter Name" onChange={handlename}/>
+                        </label>
+                        <label>
+                            Enter Email
+                            <input className="emailinputtab" type="email" placeholder="Enter Email" onChange={handleregemail} />
+                        </label>
+                        <label>
+                            Enter Password
+                            <input className="ep" type="password" placeholder="Enter password" onChange={handleregpass}/>
+                        </label>
+                        <label>
+                            Confirm Password
+                            <input className="cp" type="password" placeholder="Confirm Password" onChange={handlecppass}/>
+                        </label>
+                        <label><input type="submit"></input></label>
+                    </form>
+                </div>
+            )
+        }
+        else{
+            return null
+        }
+    }
+
+    const Show = (props) => {
+        if (props.target.id === "login"){
+            document.getElementById("login").style.backgroundColor = "#e05ad3"
+            document.getElementById("login").style.borderBottom = "none"
+            document.getElementById("register").style.backgroundColor = "aqua"
+            document.getElementById("register").style.borderBottom = "2px solid black"
+            setlogin(true)
+            setreg(false)
+        }
+        else if(props.target.id === "register"){
+            document.getElementById("register").style.backgroundColor = "#e05ad3";
+            document.getElementById("login").style.backgroundColor = "aqua";
+            document.getElementById("register").style.borderBottom = "none";
+            document.getElementById("login").style.borderBottom = "2px solid black";
+            setlogin(false)
+            setreg(true)
+        }
+    }
 
     return (
         <div className="container">
@@ -129,31 +203,18 @@ const Register = () => {
             </h3>
             <div className="form">
                 <div className="buttons">
-                    <button id="login" onClick={changecolor}>
+                    <button id="login" onClick={Show}>
                         LogIn
                     </button>
-                    <button id="register" onClick={changecolor}>
+                    <button id="register" onClick={Show}>
                         Register
                     </button>
                 </div>
-                {Show({ showval: butstate })}
+                {Login({display: showlogin})}
+                {Register({display2: showreg})}
             </div>
         </div>
     );
 };
 
 export default Register;
-
-// <div>
-//                      <form >
-//                         <label>
-//                             Enter Email
-//                             <input  type="text"  placeholder="Enter Email" />
-//                         </label><br />
-//                         <label>
-//                             Password
-//                             <input type="password" name="password"  placeholder="Enter Password" />
-//                         </label><br />
-//                         <input type="submit" value="submit" />
-//                     </form>
-//                 </div>

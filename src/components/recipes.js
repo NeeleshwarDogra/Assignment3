@@ -1,19 +1,20 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Recipes = (props) => {
     let data = useLocation().state;
     console.log(data);
+	const navigate = useNavigate()
 
     const logout = () => {
         useLocation.state = null;
         data = null;
-        console.log(data);
+		navigate("/")
     };
 
     return (
         <div>
-            <h1> hi </h1> <button onClick={logout}> Logout </button>{" "}
+            <h1>Recipes</h1> <button onClick={logout}> Logout </button>{" "}
         </div>
     );
 };

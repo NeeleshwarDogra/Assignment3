@@ -49,14 +49,30 @@ div.buttons > button:hover{
 .loginform{
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding-top: 20px;
+    width: 100%;
 }
 
-div.loginform > label {
+form.loginform > label {
     margin-top: 20px;
 }
 
 .inputtab{
     margin-left: 20px;
+}
+
+.emailinputtab {
+    margin-left: 50px;
+}
+
+.ep{
+    margin-left: 20px;
+}
+
+.cp{
+    margin-left: 10px;
+}
+
+.np{
+    margin-left: 50px;
 }

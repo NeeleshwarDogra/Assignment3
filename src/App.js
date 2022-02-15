@@ -5,7 +5,7 @@ import Recipes from "./components/recipes";
 function App() {
   return (
     <div>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter >
         <Routes>
           <Route path={"/"} element = {<Register />} ></Route>
           <Route path={"/home"} element = {<Recipes />}></Route>
@@ -16,3 +16,5 @@ function App() {
 }
 
 export default App;
+
+// basename={process.env.PUBLIC_URL}
