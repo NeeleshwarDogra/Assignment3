@@ -5,7 +5,7 @@ import Recipes from "./components/recipes";
 function App() {
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path={"/"} element = {<Register />} ></Route>
           <Route path={"/home"} element = {<Recipes />}></Route>
